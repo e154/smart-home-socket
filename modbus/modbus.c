@@ -205,6 +205,7 @@ void MobBusTransmitFSM() {
 
 void MobBusSend(const u08 *frame, u08 length) {
 
+    *curTxBuffer = (u08) TxBuf;
     memcpy((u08*)curTxBuffer + 2, frame, length);
     curTxBufferCount = 2;
 
