@@ -152,7 +152,7 @@ void MobBusTransmitFSM() {
     {
         case STATE_TX_START:
             output_high(MAX485_PORT, MAX485_PIN);  //rs458
-        SetTimerTask(MobBusTransmitFSM, 10);
+            SetTimerTask(MobBusTransmitFSM, 1);
             ucByte = ':';
             uart_putc((u08)ucByte, 0);
             curTxState = STATE_TX_DATA;
@@ -160,7 +160,7 @@ void MobBusTransmitFSM() {
             break;
 
         case STATE_TX_DATA:
-          SetTimerTask(MobBusTransmitFSM, 10);
+            SetTimerTask(MobBusTransmitFSM, 1);
             if( curTxBufferCount > 0 )
             {
                 switch ( curRxBytePos )
@@ -186,7 +186,7 @@ void MobBusTransmitFSM() {
             break;
 
         case STATE_TX_END:
-          SetTimerTask(MobBusTransmitFSM, 10);
+            SetTimerTask(MobBusTransmitFSM, 1);
             curTxBufferCount = 0;
             uart_putc((u08)MB_ASCII_DEFAULT_LF, 0);
             curTxState = STATE_TX_NOTIFY;
@@ -194,7 +194,7 @@ void MobBusTransmitFSM() {
 
         case STATE_TX_NOTIFY:
             output_low(MAX485_PORT, MAX485_PIN);  //rs458
-        SetTimerTask(MobBusTransmitFSM, 10);
+            SetTimerTask(MobBusTransmitFSM, 1);
             curTxState = STATE_TX_IDLE;
             break;
 
@@ -205,7 +205,6 @@ void MobBusTransmitFSM() {
 
 void MobBusSend(const u08 *frame, u08 length) {
 
-    *curTxBuffer = (u08) TxBuf;
     memcpy((u08*)curTxBuffer + 2, frame, length);
     curTxBufferCount = 2;
 
@@ -213,10 +212,11 @@ void MobBusSend(const u08 *frame, u08 length) {
     curTxBuffer[1] = curRxBuffer[1];    //команда
     curTxBufferCount += length;
 
-    curTxBuffer[curTxBufferCount++] = LRC((u08 *) curTxBuffer, curTxBufferCount);
+    u08 lrc = LRC((u08 *) curTxBuffer, curTxBufferCount);
+    curTxBuffer[curTxBufferCount++] = lrc;
 
     curTxState = STATE_TX_START;
-    SetTimerTask(MobBusTransmitFSM, 100);
+    SetTimerTask(MobBusTransmitFSM, 1);
 }
 
 static u08 LRC(u08 *pucFrame, u08 usLen) {
@@ -269,5 +269,5 @@ void errorMessage(u08 error) {
 
   /* Activate the transmitter. */
   curTxState = STATE_TX_START;
-  SetTimerTask(MobBusTransmitFSM, 100);
+  SetTimerTask(MobBusTransmitFSM, 1);
 }
