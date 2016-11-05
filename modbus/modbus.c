@@ -46,7 +46,7 @@ static eMBSndState curTxState;
 static volatile u08 curTxBufferCount;
 static volatile u08 curRxBufferPos;
 static volatile u08 *curRxBuffer = RxBuf;
-static volatile u08 *curTxBuffer = TxBuf;
+static volatile u08 *curTxBuffer;
 
 void ModbusInit() {
     curRxState = STATE_RX_IDLE;
@@ -105,11 +105,7 @@ void ModBusReceiveFSM(const u08 ucByte) {
                             curRxBytePos = BYTE_LOW_NIBBLE;
                             break;
                         } else {
-                            /* not handled in Modbus specification but seems
-                             * a resonable implementation. */
                             curRxState = STATE_RX_IDLE;
-                            /* Disable previously activated timer because of error state. */
-                            // <<======================
                         }
                         break;
                     case BYTE_LOW_NIBBLE:
@@ -125,15 +121,13 @@ void ModBusReceiveFSM(const u08 ucByte) {
                 curRxState = STATE_RX_IDLE;
                 ModBusCheckPack(curRxBufferPos);
             } else if( ucByte == ':' ) {
-                /* Empty receive buffer and back to receive state. */
                 curRxBytePos = BYTE_HIGH_NIBBLE;
                 curRxBufferPos = 0;
                 curRxState = STATE_RX_RCV;
             } else {
-                /* Frame is not okay. Delete entire frame. */
                 curRxState = STATE_RX_IDLE;
             }
-//            break;
+            break;
         case STATE_RX_IDLE:
             if (ucByte == ':') {
                 curRxBufferPos = 0;
@@ -152,15 +146,14 @@ void MobBusTransmitFSM() {
     {
         case STATE_TX_START:
             output_high(MAX485_PORT, MAX485_PIN);  //rs458
-            SetTimerTask(MobBusTransmitFSM, 1);
             ucByte = ':';
             uart_putc((u08)ucByte, 0);
             curTxState = STATE_TX_DATA;
             curRxBytePos = BYTE_HIGH_NIBBLE;
+            MobBusTransmitFSM();
             break;
 
         case STATE_TX_DATA:
-            SetTimerTask(MobBusTransmitFSM, 1);
             if( curTxBufferCount > 0 )
             {
                 switch ( curRxBytePos )
@@ -183,19 +176,21 @@ void MobBusTransmitFSM() {
                 uart_putc((u08)MB_ASCII_DEFAULT_CR, 0);
                 curTxState = STATE_TX_END;
             }
+
+            MobBusTransmitFSM();
             break;
 
         case STATE_TX_END:
-            SetTimerTask(MobBusTransmitFSM, 1);
             curTxBufferCount = 0;
             uart_putc((u08)MB_ASCII_DEFAULT_LF, 0);
             curTxState = STATE_TX_NOTIFY;
+            MobBusTransmitFSM();
             break;
 
         case STATE_TX_NOTIFY:
             output_low(MAX485_PORT, MAX485_PIN);  //rs458
-            SetTimerTask(MobBusTransmitFSM, 1);
             curTxState = STATE_TX_IDLE;
+            MobBusTransmitFSM();
             break;
 
         case STATE_TX_IDLE:
@@ -203,8 +198,9 @@ void MobBusTransmitFSM() {
     }
 }
 
-void MobBusSend(const u08 *frame, u08 length) {
+void MobBusSend(const u08 *frame, const u08 length) {
 
+    curTxBuffer = (u08*)TxBuf;
     memcpy((u08*)curTxBuffer + 2, frame, length);
     curTxBufferCount = 2;
 
@@ -216,7 +212,7 @@ void MobBusSend(const u08 *frame, u08 length) {
     curTxBuffer[curTxBufferCount++] = lrc;
 
     curTxState = STATE_TX_START;
-    SetTimerTask(MobBusTransmitFSM, 1);
+    MobBusTransmitFSM();
 }
 
 static u08 LRC(u08 *pucFrame, u08 usLen) {
@@ -269,5 +265,5 @@ void errorMessage(u08 error) {
 
   /* Activate the transmitter. */
   curTxState = STATE_TX_START;
-  SetTimerTask(MobBusTransmitFSM, 1);
+  MobBusTransmitFSM();
 }

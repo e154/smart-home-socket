@@ -7,7 +7,7 @@
 #include "../socket/socket.h"
 
 void echo(const u08* ucASCIIBuf, const u08 NumByte) {
-  MobBusSend(ucASCIIBuf, NumByte);
+    MobBusSend(ucASCIIBuf, NumByte);
 }
 
 void get_status() {
@@ -35,7 +35,7 @@ void get_status() {
     if (phase)
       s[3] = 1;
 
-  MobBusSend(s, 7);
+    MobBusSend(s, 7);
 }
 
 void read_state(const u08* ucASCIIBuf) {

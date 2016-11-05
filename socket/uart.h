@@ -10,6 +10,6 @@
 FILE uart_stream;
 
 int uart_putc(  char c, FILE *file );
-int uart_getc( FILE* file );
+//int uart_getc( FILE* file );
 
 #endif //CMAKE_AVR_UART_H

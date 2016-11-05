@@ -10,8 +10,8 @@
 #include "../config.h"
 #include <stdio.h>
 
-#define MaxLenghtRxBuf 25
-#define MaxLenghtTxBuf 25
+#define MaxLenghtRxBuf 32
+#define MaxLenghtTxBuf 32
 
 // errors
 #define ILLEGAL_FUNCTION        0x01
@@ -33,7 +33,7 @@ void errorMessage(u08 error);
 static u08 LRC(u08 *pucFrame, u08 usLen);
 static u08 char2bin(u08 ucCharacter);
 static u08 bin2char(u08 ucByte);
-void MobBusSend(const u08 *frame, u08 length);
+void MobBusSend(const u08 *frame, const u08 length);
 
 inline void ModbusSetRead() {
     output_low(MAX485_PORT, MAX485_PIN);

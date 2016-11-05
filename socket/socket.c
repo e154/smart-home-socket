@@ -94,13 +94,13 @@ void SocketInit() {
     output_high(TOGGLE_PORT, TOGGLE_PIN);
     output_low(MAX485_PORT, MAX485_PIN);
 
-    printf("Socket console v1.1\n\r");
-    printf("F_CPU: %lu\n\r", F_CPU);
-    printf("BAUD: %lu\n\r", BAUD);
+//    printf("Socket console v1.1\n\r");
+//    printf("F_CPU: %lu\n\r", F_CPU);
+//    printf("BAUD: %lu\n\r", BAUD);
 
     // Запуск фоновых задач.
+    ModbusInit();
     SetTask(CheckTemp);
     SetTask(BlinkPwrLed);
-    SetTask(ModbusInit);
-    SetTimerTask(PhaseCheck, 1000);
+    SetTask(PhaseCheck);
 }
