@@ -92,7 +92,7 @@ void SocketInit() {
 
     output_low(BUZZER_PORT, BUZZER_PIN);
     output_high(TOGGLE_PORT, TOGGLE_PIN);
-    output_low(MAX485_PORT, MAX485_PIN);
+    ModbusSetRead();
 
 //    printf("Socket console v1.1\n\r");
 //    printf("F_CPU: %lu\n\r", F_CPU);
