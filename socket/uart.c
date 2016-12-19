@@ -8,7 +8,6 @@
 
 ISR( USART_RX_vect )
 {
-    if  (UCSR0A &(1<<FE0)) return; // FE-ошибка кадра
     ModBusReceiveFSM(UDR0);
 }
 
