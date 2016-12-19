@@ -16,6 +16,7 @@
 #define invert(portdir, pin) portdir ^= (1<<pin)
 #define line_is_high(portdir, pin) ((portdir & (1<<pin)) != 0)
 #define line_is_low(portdir, pin) ((portdir & (1<<pin)) == 0)
+#define soft_reset() do {wdt_enable(WDTO_15MS);for(;;){}} while(0)
 
 inline void removeSubstring(char *s,const char *toremove)
 {

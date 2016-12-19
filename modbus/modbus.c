@@ -192,7 +192,6 @@ void MobBusTransmitFSM() {
             break;
 
         case STATE_TX_IDLE:
-          loop_until_bit_is_set(UCSR0A, TXC0);
             SetTimerTask(ModbusSetRead, 40);
 //            ModbusSetRead();
             break;
