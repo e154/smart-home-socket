@@ -24,7 +24,7 @@ void AlertBuzzer(void)
 }
 
 ISR(INT0_vect) {
-//    InvBit(MCUCR,ISC00);//Каждый раз меняем INT0 то на спадающий то на нарастающий фронт.
+    invert(MCUCR,ISC00); //Каждый раз меняем INT0 то на спадающий то на нарастающий фронт.
 //    printf("INT0\n\r");
     phase_counter++;
 }
