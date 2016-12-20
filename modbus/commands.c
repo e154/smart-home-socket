@@ -28,7 +28,7 @@ void get_status() {
       s[4] = 1;
 
     // состояние (вкл/выкл)
-    if (line_is_high(DDRD, TOGGLE_PIN))
+    if (line_is_high(PORTD, TOGGLE_PIN))
       s[2] = 1;
 
     // фаза (есть/нет)
