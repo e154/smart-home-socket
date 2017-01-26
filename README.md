@@ -30,6 +30,7 @@
     включить
     выключить
 
+<img src="images/DSC_0055.JPG" alt="smart home socket" width="630">
 <img src="images/DSC_0030.JPG" alt="smart home socket" width="630">
 <img src="images/DSC_0031.JPG" alt="smart home socket" width="630">
 <img src="images/DSC_0048.JPG" alt="smart home socket" width="630">

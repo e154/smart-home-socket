@@ -13,7 +13,7 @@
 #define output_high(port, pin) port |= (1<<pin)
 #define set_input(portdir, pin) portdir &= ~(1<<pin)
 #define set_output(portdir, pin) portdir |= (1<<pin)
-#define invert(port, pin) port ^= (1<<pin)
+#define invert(portdir, pin) portdir ^= (1<<pin)
 #define line_is_high(port, pin) ((port & (1<<pin)) != 0)
 #define line_is_low(port, pin) ((port & (1<<pin)) == 0)
 #define soft_reset() do {wdt_enable(WDTO_15MS);for(;;){}} while(0)
