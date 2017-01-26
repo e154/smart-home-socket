@@ -192,7 +192,7 @@ void MobBusTransmitFSM() {
             break;
 
         case STATE_TX_IDLE:
-            SetTimerTask(ModbusSetRead, 40);
+            SetTimerTask(ModbusSetRead, 10);
 //            ModbusSetRead();
             break;
     }
