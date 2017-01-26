@@ -1,0 +1,18 @@
+language: c
+
+before_install:
+  - sudo apt-get update -qq
+
+install:
+  - sudo apt-get install -qq gcc-avr binutils-avr avr-libc
+
+script:
+  - mkdir builld
+  - cd ./build
+  - cmake ..
+  - make
+
+notifications:
+  email:
+    on_success: never
+    on_failure: always
