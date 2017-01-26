@@ -5,11 +5,6 @@
 #ifndef CMAKE_AVR_UART_H
 #define CMAKE_AVR_UART_H
 
-#include "fifo.h"
-
-FILE uart_stream;
-
-int uart_putc(  char c, FILE *file );
-//int uart_getc( FILE* file );
+void uart_putc(char c);
 
 #endif //CMAKE_AVR_UART_H

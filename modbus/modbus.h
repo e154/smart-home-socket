@@ -35,11 +35,11 @@ static u08 char2bin(u08 ucCharacter);
 static u08 bin2char(u08 ucByte);
 void MobBusSend(const u08 *frame, const u08 length);
 
-inline void ModbusSetRead() {
+static void ModbusSetRead() {
     output_low(MAX485_PORT, MAX485_PIN);
 }
 
-inline void ModbusSetWrite() {
+static void ModbusSetWrite() {
     output_high(MAX485_PORT, MAX485_PIN);
 }
 

@@ -22,9 +22,13 @@ inline void InitAll(void)
     UBRR0H = HI(bauddivider);
 //    UBRR0L = UBRRH_VALUE;
 //    UBRR0H = UBRRL_VALUE;
-    UCSR0A = 0;
-    UCSR0B = _BV(RXEN0) | _BV(TXEN0) | _BV(RXCIE0);
-    UCSR0C = _BV(UCSZ00) | _BV(UCSZ01);
+#if USE_2X
+  UCSR0A |= _BV(U2X0);
+#else
+  UCSR0A &= ~(_BV(U2X0));
+#endif
+    UCSR0B = _BV(RXEN0) | _BV(TXEN0) | _BV(RXCIE0); /* Enable RX and TX and interrupt*/
+    UCSR0C = _BV(UCSZ00) | _BV(UCSZ01); /* 8-bit data */
 
     //Init ADC
     //---------------------------------------------------------------------------

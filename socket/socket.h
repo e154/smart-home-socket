@@ -14,12 +14,16 @@ bool phase;
 u16 current_temp;
 u08 phase_counter;
 
-void CheckTemp(void);
 void AlertBuzzer(void);
 void SocketInit();
-void EnableSocket();
-void DisableSocket();
-void BlinkPwrLed(void);
-void PhaseCheck(void);
+void Loop(void);
+
+inline void EnableSocket() {
+  output_high(TOGGLE_PORT, TOGGLE_PIN);
+}
+
+inline void DisableSocket() {
+  output_low(TOGGLE_PORT, TOGGLE_PIN);
+}
 
 #endif //CMAKE_AVR_SOCKET_H

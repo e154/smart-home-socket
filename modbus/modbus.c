@@ -145,9 +145,8 @@ void MobBusTransmitFSM() {
     switch ( curTxState )
     {
         case STATE_TX_START:
-            output_high(MAX485_PORT, MAX485_PIN);  //rs458
             ucByte = ':';
-            uart_putc((u08)ucByte, 0);
+            uart_putc((u08)ucByte);
             curTxState = STATE_TX_DATA;
             curRxBytePos = BYTE_HIGH_NIBBLE;
             MobBusTransmitFSM();
@@ -160,20 +159,20 @@ void MobBusTransmitFSM() {
                 {
                     case BYTE_HIGH_NIBBLE:
                         ucByte = bin2char((u08) (*curTxBuffer >> 4));
-                        uart_putc((u08)ucByte, 0);
+                        uart_putc((u08)ucByte);
                         curRxBytePos = BYTE_LOW_NIBBLE;
                         break;
 
                     case BYTE_LOW_NIBBLE:
                         ucByte = bin2char((u08) (*curTxBuffer & 0x0F));
-                        uart_putc((u08)ucByte, 0);
+                        uart_putc((u08)ucByte);
                         curTxBuffer++;
                         curRxBytePos = BYTE_HIGH_NIBBLE;
                         curTxBufferCount--;
                         break;
                 }
             } else {
-                uart_putc((u08)MB_ASCII_DEFAULT_CR, 0);
+                uart_putc((u08)MB_ASCII_DEFAULT_CR);
                 curTxState = STATE_TX_END;
             }
 
@@ -182,23 +181,26 @@ void MobBusTransmitFSM() {
 
         case STATE_TX_END:
             curTxBufferCount = 0;
-            uart_putc((u08)MB_ASCII_DEFAULT_LF, 0);
+            uart_putc((u08)MB_ASCII_DEFAULT_LF);
             curTxState = STATE_TX_NOTIFY;
             MobBusTransmitFSM();
             break;
 
         case STATE_TX_NOTIFY:
-            output_low(MAX485_PORT, MAX485_PIN);  //rs458
             curTxState = STATE_TX_IDLE;
             MobBusTransmitFSM();
             break;
 
         case STATE_TX_IDLE:
+            SetTimerTask(ModbusSetRead, 10);
+//            ModbusSetRead();
             break;
     }
 }
 
 void MobBusSend(const u08 *frame, const u08 length) {
+
+    ModbusSetWrite();  //rs458
 
     curTxBuffer = (u08*)TxBuf;
     memcpy((u08*)curTxBuffer + 2, frame, length);

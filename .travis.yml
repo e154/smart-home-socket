@@ -1,0 +1,17 @@
+language: c
+
+addons:
+  apt:
+    packages:
+      - cmake
+      - gcc-avr
+      - binutils-avr
+      - avr-libc
+
+script:
+  - mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=Debug .. && make
+
+notifications:
+  email:
+    on_success: never
+    on_failure: always
