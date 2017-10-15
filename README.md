@@ -1,6 +1,13 @@
 Автомат управления розетками/нагрузками
 ---------------------------------------
 
+[Project site](https://e154.github.io/smart-home/) |
+[Server](https://github.com/e154/smart-home/) |
+[Configurator](https://github.com/e154/smart-home-configurator/) |
+[Node](https://github.com/e154/smart-home-node/) |
+[Development Tools](https://github.com/e154/smart-home-tools/) |
+[Smart home Socket](https://github.com/e154/smart-home-socket/)
+
 [![Build Status](https://travis-ci.org/e154/smart-home-socket.svg?branch=master)](https://travis-ci.org/e154/smart-home-socket)
 
 ##### Функции
