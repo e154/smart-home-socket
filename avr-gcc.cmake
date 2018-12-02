@@ -140,7 +140,7 @@ set(hex_file ${MCU_TYPE_FOR_FILENAME}.hex)
 set(map_file ${MCU_TYPE_FOR_FILENAME}.map)
 set(eeprom_image ${MCU_TYPE_FOR_FILENAME}.eep)
 
-ADD_EXECUTABLE(${elf_file} ${SOURCE_EXE})
+ADD_EXECUTABLE(${elf_file} ${SOURCE})
 
 #ADD_LIBRARY(foo STATIC ${SOURCE_LIB})
 #target_link_libraries(${PROJECT_NAME} foo)
