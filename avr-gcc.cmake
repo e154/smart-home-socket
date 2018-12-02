@@ -121,6 +121,10 @@ endif(CMAKE_BUILD_TYPE MATCHES Debug)
 set(CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "")
 set(CMAKE_SHARED_LIBRARY_LINK_CXX_FLAGS "")
 
+# https://stackoverflow.com/questions/39527730/linked-elf-file-contains-no-symbols
+SET(CMAKE_C_LINK_FLAGS -Wp,-M,-MP,-MT,$(*F).o,-MF,dep/$(@F).d )
+#set(CMAKE_EXE_LINKER_FLAGS "-lm")
+
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 
 ##########################################################################

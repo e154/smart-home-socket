@@ -1,5 +1,22 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8.4)
 
+# find compiler and toolchain programs
+find_program(AVRCPP avr-g++)
+find_program(AVRC avr-gcc)
+find_program(AVRAR avr-ar)
+find_program(AVRSTRIP avr-strip)
+find_program(OBJCOPY avr-objcopy)
+find_program(OBJDUMP avr-objdump)
+find_program(AVRSIZE avr-size)
+find_program(AVRDUDE avrdude)
+find_program(SCREEN screen)
+
+# toolchain settings
+set(CMAKE_SYSTEM_NAME Generic)
+set(CMAKE_CXX_COMPILER ${AVRCPP})
+set(CMAKE_C_COMPILER ${AVRC})
+set(CMAKE_ASM_COMPILER ${AVRC})
+
 PROJECT(socket)
 
 SET(MCU_SPEED "16000000UL")
@@ -10,7 +27,7 @@ set(AVR_E_FUSE 0x01)
 
 set(AVR_UPLOADTOOL avrdude)
 set(AVR_PROGRAMMER stk500v2)
-set(AVR_UPLOADTOOL_PORT /dev/ttyUSB0)
+set(AVR_UPLOADTOOL_PORT /dev/tty.usbserial-A100VSX4)
 
 set(CMAKE_BUILD_TYPE Release)
 
