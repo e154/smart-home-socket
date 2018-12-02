@@ -37,12 +37,12 @@ SET(SOURCE_EXE
         socket/ftoa.c
         socket/socket.c
         socket/socket.h
-        modbus/tools.h
-        modbus/tools.c
-        modbus/modbus.h
-        modbus/modbus.c
-        modbus/commands.h
-        modbus/commands.c
+        smartbus/tools.h
+        smartbus/tools.c
+        smartbus/modbus.h
+        smartbus/modbus.c
+        smartbus/commands.h
+        smartbus/commands.c
         config.h
 )
 

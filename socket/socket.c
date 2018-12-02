@@ -7,7 +7,7 @@
 #include "socket.h"
 #include "ftoa.h"
 #include "lm35.h"
-#include "../modbus/modbus.h"
+#include "../smartbus/modbus.h"
 
 //============================================================================
 //Область задач
