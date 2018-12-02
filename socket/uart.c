@@ -4,7 +4,7 @@
 
 #include <avr/interrupt.h>
 #include "uart.h"
-#include "../modbus/modbus.h"
+#include "../smartbus/modbus.h"
 
 ISR( USART_RX_vect )
 {

@@ -14,40 +14,46 @@ set(AVR_UPLOADTOOL_PORT /dev/ttyUSB0)
 
 set(CMAKE_BUILD_TYPE Release)
 
+include_directories(
+#    modbus/ascii
+#    modbus/functions
+#    modbus/include
+#    modbus/rtu
+    port
+    rtos
+    socket
+)
+
+file(GLOB
+
+    SOURCE
+
+    main.c
+#    "port/*.h"
+#    "port/*.c"
+#    "modbus/include/*.h"
+#    "modbus/include/*.c"
+#    "modbus/ascii/*.h"
+#    "modbus/ascii/*.c"
+#    "modbus/functions/*.h"
+#    "modbus/functions/*.c"
+#    "modbus/rtu/*.h"
+#    "modbus/rtu/*.c"
+#    "modbus/*.h"
+#    "modbus/*.c"
+        smartbus/*h
+        smartbus/*c
+        socket/*.h
+        socket/*.c
+        rtos/*.h
+        rtos/*.c
+)
+
 SET(SOURCE_EXE
 
-        main.c
-        rtos/avrlibdefs.h
-        rtos/avrlibtypes.h
-        rtos/EERTOS.c
-        rtos/EERTOS.h
-        rtos/EERTOSHAL.h
-        rtos/EERTOSHAL.c
-        rtos/HAL.c
-        rtos/HAL.h
-        socket/uart.c
-        socket/uart.h
-        socket/common.h
-        socket/fifo.h
-        socket/adc.h
-        socket/adc.c
-        socket/lm35.h
-        socket/lm35.c
-        socket/ftoa.h
-        socket/ftoa.c
-        socket/socket.c
-        socket/socket.h
-        modbus/tools.h
-        modbus/tools.c
-        modbus/modbus.h
-        modbus/modbus.c
-        modbus/commands.h
-        modbus/commands.c
-        config.h
 )
 
 SET(SOURCE_LIB
-
 
 )
 
