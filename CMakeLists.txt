@@ -19,6 +19,7 @@ include_directories(
 #    modbus/functions
 #    modbus/include
 #    modbus/rtu
+    smartbus
     port
     rtos
     socket
